@@ -4,19 +4,45 @@ on:
   push:
     branches:
       - 'main'
-    tags:
-      - '*'
-  release:
   workflow_dispatch:
 
 env:
   BUILD_TYPE: Release
   GP2040_BOARDCONFIG: IntegratedPicoFightingBoard
+  GP2040_REPO: OpenStickCommunity/GP2040-CE
 
 jobs:
+  get-release-version:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+    - run: |  
+        TAG=$(gh release view --repo '${{ env.GP2040_REPO }}' --json tagName --jq .tagName || echo)
+        echo 'GP2040_CE_TAG='$TAG >> $GITHUB_ENV
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        OWNER: ${{ github.repository_owner }}
+        REPO: ${{ github.event.repository.name }}
+    - run: |
+        TAG=$(gh release view --repo '${{ github.repository }}' --json tagName --jq .tagName || echo)
+        echo 'CURRENT_TAG='$TAG >> $GITHUB_ENV
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        OWNER: ${{ github.repository_owner }}
+        REPO: ${{ github.event.repository.name }}
+    - run: touch ${{github.workspace}}/release_version.txt
+    - if: ${{ env.GP2040_CE_TAG != 'release not found' && env.GP2040_CE_TAG != env.CURRENT_TAG }}
+      run: echo $GP2040_CE_TAG > ${{github.workspace}}/release_version.txt
+    - uses: actions/upload-artifact@v4.3.1
+      with:
+        name: Release Version
+        path: ${{github.workspace}}/release_version.txt
+        if-no-files-found: error
+
   build-web-interface:
     uses: ./.github/workflows/node.js.yml
-  build:
+
+  build-firmware:
     needs: build-web-interface
     # The CMake configure and build commands are platform-agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
@@ -28,16 +54,14 @@ jobs:
     - name: Checkout GP2040-CE
       uses: actions/checkout@v4.1.1
       with:
-        repository: 'OpenStickCommunity/GP2040-CE'
+        repository: '${{ env.GP2040_REPO }}'
         fetch-depth: 0
         fetch-tags: true
 
-    - name: Checkout GP2040-CE
+    - name: Checkout IPFB
       uses: actions/checkout@v4.1.1
       with:
-        path: configs/IntegratedPicoFightingBoard/
-        fetch-depth: 0
-        fetch-tags: true
+        path: configs/${{ env.GP2040_BOARDCONFIG }}/
 
     - name: Setup SDK pipeline
       uses: Fortinbra/RaspberryPiPicoBuild@v3
@@ -67,3 +91,33 @@ jobs:
         name: GP2040-CE - ${{ env.GP2040_BOARDCONFIG }}
         path: ${{github.workspace}}/build/GP2040-CE_*_${{ env.GP2040_BOARDCONFIG }}.uf2
         if-no-files-found: error
+
+  create-release:
+    permissions:
+      contents: write
+    needs:
+      - get-release-version
+      - build-firmware
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Release Version
+        uses: actions/download-artifact@v4.1.2
+        with:
+          name: Release Version
+          path: ${{github.workspace}}/
+
+      - run: echo "RELEASE_VERSION=$(cat release_version.txt)" >> $GITHUB_ENV
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4.1.2
+        with:
+          name: GP2040-CE - ${{ env.GP2040_BOARDCONFIG }}
+          path: ${{github.workspace}}/
+
+      - name: Create Release
+        run: gh release create --repo '${{ github.repository }}' $(cat release_version.txt) ./*.uf2
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
