@@ -120,7 +120,7 @@ jobs:
 
       - name: Create Release
         if: ${{ env.RELEASE_VERSION != '' }}
-        run: gh release create --repo '${{ github.repository }}' $(cat env.RELEASE_VERSION) ./*.uf2
+        run: gh release create --repo '${{ github.repository }}' --notes "This is an automated release. See the GP2040-CE patch notes for ${{ env.RELEASE_VERSION }} [here](https://github.com/${{ env.GP2040_REPO }}/releases/tag/${{ env.RELEASE_VERSION }})." ${{ env.RELEASE_VERSION }} ./*.uf2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
