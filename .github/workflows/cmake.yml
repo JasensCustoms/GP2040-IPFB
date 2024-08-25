@@ -112,13 +112,15 @@ jobs:
       - run: echo "RELEASE_VERSION=$(cat release_version.txt)" >> $GITHUB_ENV
 
       - name: Download Build Artifacts
+        if: ${{ env.RELEASE_VERSION != '' }}
         uses: actions/download-artifact@v4.1.2
         with:
           name: GP2040-CE - ${{ env.GP2040_BOARDCONFIG }}
           path: ${{github.workspace}}/
 
       - name: Create Release
-        run: gh release create --repo '${{ github.repository }}' $(cat release_version.txt) ./*.uf2
+        if: ${{ env.RELEASE_VERSION != '' }}
+        run: gh release create --repo '${{ github.repository }}' $(cat env.RELEASE_VERSION) ./*.uf2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
