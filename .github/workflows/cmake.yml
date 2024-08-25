@@ -1,0 +1,69 @@
+name: CMake
+
+on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - '*'
+  release:
+  workflow_dispatch:
+
+env:
+  BUILD_TYPE: Release
+  GP2040_BOARDCONFIG: IntegratedPicoFightingBoard
+
+jobs:
+  build-web-interface:
+    uses: ./.github/workflows/node.js.yml
+  build:
+    needs: build-web-interface
+    # The CMake configure and build commands are platform-agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ubuntu-latest
+
+    steps:
+    #Global Setup
+    - name: Checkout GP2040-CE
+      uses: actions/checkout@v4.1.1
+      with:
+        repository: 'OpenStickCommunity/GP2040-CE'
+        fetch-depth: 0
+        fetch-tags: true
+
+    - name: Checkout GP2040-CE
+      uses: actions/checkout@v4.1.1
+      with:
+        path: configs/IntegratedPicoFightingBoard/
+        fetch-depth: 0
+        fetch-tags: true
+
+    - name: Setup SDK pipeline
+      uses: Fortinbra/RaspberryPiPicoBuild@v3
+
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v4.1.2
+      with:
+        name: fsData
+        path: ${{github.workspace}}/lib/httpd/
+
+    - name: Get core count
+      id: core_count
+      run : cat /proc/cpuinfo  | grep processor | wc -l
+      #End Global Setup
+
+    - name: Pico Build Configure CMake
+      shell: bash
+      run: PICO_SDK_PATH=${{github.workspace}}/pico-sdk GP2040_BOARDCONFIG=${{ env.GP2040_BOARDCONFIG }} SKIP_WEBBUILD=TRUE cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Pico Build
+      shell: bash
+      run: GP2040_BOARDCONFIG=${{ env.GP2040_BOARDCONFIG }} cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --parallel ${{steps.core_count.outputs.output}}
+
+    - name: Upload Pico Artifact
+      uses: actions/upload-artifact@v4.3.1
+      with:
+        name: GP2040-CE - ${{ env.GP2040_BOARDCONFIG }}
+        path: ${{github.workspace}}/build/GP2040-CE_*_${{ env.GP2040_BOARDCONFIG }}.uf2
+        if-no-files-found: error
