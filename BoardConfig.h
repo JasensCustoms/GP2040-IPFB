@@ -83,7 +83,26 @@
 #define BOARD_LEDS_PIN 15
 
 #define LED_BRIGHTNESS_MAXIMUM 150
-#define LED_BRIGHTNESS_STEPS 5
+#define LEDS_PER_PIXEL 2
+
+#define LEDS_DPAD_LEFT   11
+#define LEDS_DPAD_DOWN   10
+#define LEDS_DPAD_RIGHT  9
+#define LEDS_DPAD_UP     0
+#define LEDS_BUTTON_B3   8
+#define LEDS_BUTTON_B4   7
+#define LEDS_BUTTON_R1   6
+#define LEDS_BUTTON_L1   5
+#define LEDS_BUTTON_B1   1
+#define LEDS_BUTTON_B2   2
+#define LEDS_BUTTON_R2   3
+#define LEDS_BUTTON_L2   4
+#define LEDS_BUTTON_S1   -1
+#define LEDS_BUTTON_S2   -1
+#define LEDS_BUTTON_L3   -1
+#define LEDS_BUTTON_R3   -1
+#define LEDS_BUTTON_A1   -1
+#define LEDS_BUTTON_A2   -1
 
 #define PLED_TYPE PLED_TYPE_PWM
 #define PLED1_PIN 16
@@ -91,14 +110,14 @@
 #define PLED3_PIN 18
 #define PLED4_PIN 19
 
-// This is the I2C Display section (commonly known as the OLED display section).
-
 #define HAS_I2C_DISPLAY 1
-#define I2C0_ENABLED 1
-#define I2C0_PIN_SDA 26
-#define I2C0_PIN_SCL 27
+#define I2C1_ENABLED 1
+#define I2C1_PIN_SDA 26
+#define I2C1_PIN_SCL 27
+#define DISPLAY_I2C_BLOCK i2c1
 
 
+#define BUTTON_LAYOUT BUTTON_LAYOUT_STICKLESS
 #define BUTTON_LAYOUT_RIGHT BUTTON_LAYOUT_STICKLESSB
 
 #endif
