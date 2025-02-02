@@ -17,13 +17,7 @@ All design files are make using Autodesk EagleCAD and will only be published in 
 
 Note: The only entity that may sell the Integrated Pico Fighting Board Design is at the link above. If you wish to offer this design commercially, please reach out to [jasenhicks@jasenscustoms.com ](mailto:jasenhicks@jasenscustoms.com). If others are approved to sell the design, they will be listed here. I encourage you to inform me if you see unapproved commercial sale of the IPFB. As of now, I have chosen to stop production of the IPFB. A full discussion can be found on our discord, linked below.
 
-## GP2040-CE Firmware
-
-This repository will not house any GP2040 firmware releases, nor will it build them. 
-
-## GPIO Settings
-
-The Integrated Pico Fighting Board derived many of its pin definitions from FeralAI's carrier board. As such you should be able to use the current releases of the Pico Fighting Board published at the official GP2040-CE GitHub. 
+## GPIO Settings 
 
 Main Buttons and Directions:
 
@@ -71,6 +65,33 @@ USB Passthrough GPIO
 
 - GPIO 24: DATA PLUS
 - GPIO 25: DATA MINUS
+
+## Firmware
+
+No custom firmware is needed or provided for the Integrated Pico Fighting Board. Because the pin definitions are derived from FeralAI's carrier board, firmware for the Pico Fighting Board is expected to be compatible with minimal settings changes. Steps to customize GP2040-CE settings to fully utilize Turbo and Playstation authentication are indicated below.
+
+### Settings
+To manually adust the PicoFightingBoard firmware to work perfectly with the IPFB, just adjust these settings.
+
+#### Turbo
+- Add on Configuration:
+  - Enable turbo
+  - Turbo LED Pin 23
+  - Save
+- Pin Mappings:
+  - Set pin 28 to Turbo
+  - Save
+
+#### PS5 (or PS4)
+- Input Mode Settings
+  - Current Input Mode: PS5 (or PS4)
+  - Authentication Settings: Host USB
+- Boot Input Modes
+  - Set B4 to PS5 (or PS4)
+
+#### XBone
+- Boot Input Modes
+  - Set R1 to XBone
 
 ## Support
 
