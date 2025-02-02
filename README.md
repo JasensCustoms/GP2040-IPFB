@@ -4,6 +4,9 @@
 
 The <a href="https://jasenscustoms.com/collections/fight-stick-pcbs/products/integrated-pico-fighting-board-gp2040ce">Integrated Pico Fighting Board</a> is now open sourced under the Creative Commons Attribution-Non Commercial Sharealike 4.0 International License. This is a HARDWARE device that was designed to easily run the GP2040-CE firmware UNMODIFIED. That has always been the intent despite narratives suggesting otherwise.
 
+![image](https://github.com/user-attachments/assets/0402e3fc-74b1-4511-bbe3-5bbda8b60b5d)
+
+
 It was designed to intentionally follow the Fighting Game Community Layout Generally Accepted Standard. This was originally pioneered by AkiShop and was adopted by Brook for most of their fighting boards at the behest and urging of myself and a few other makers in the space early in Brook's entry to the market. The goal was to make the IPFB a low cost, easily dropped in replacement for the PS360+ or any Brook Board if a person so chose.
 
 ## Design Files
