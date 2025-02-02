@@ -2,16 +2,15 @@
   <img alt="Jasen's Customs Logo" src="https://jasenscustoms.com/cdn/shop/files/jcc_logo.png?width=125" />
 </p>
 
-The <a href="https://jasenscustoms.com/collections/fight-stick-pcbs/products/integrated-pico-fighting-board-gp2040ce">Integrated Pico Fighting Board</a> is now open sourced under the Creative Commons Attribution-Non Commercial Sharealike 4.0 International License. This is a HARDWARE device that was designed to easily run the GP2040-CE firmware UNMODIFIED. That has always been the intent despite narratives suggesting otherwise.
+The <a href="https://jasenscustoms.com/collections/fight-stick-pcbs/products/integrated-pico-fighting-board-gp2040ce">Integrated Pico Fighting Board</a> is an open source arcade fight stick PCB design made available under the Creative Commons Attribution-Non Commercial Sharealike 4.0 International License. This is a solely **hardware** project that is designed to easily run **unmodified** GP2040-CE firmware. That has always been the intent despite narratives suggesting otherwise.
 
 ![image](https://github.com/user-attachments/assets/0402e3fc-74b1-4511-bbe3-5bbda8b60b5d)
 
-
-It was designed to intentionally follow the Fighting Game Community Layout Generally Accepted Standard. This was originally pioneered by AkiShop and was adopted by Brook for most of their fighting boards at the behest and urging of myself and a few other makers in the space early in Brook's entry to the market. The goal was to make the IPFB a low cost, easily dropped in replacement for the PS360+ or any Brook Board if a person so chose.
+It was designed to follow the Fighting Game Community Layout Generally Accepted Standard originally pioneered by AkiShop. This design was adopted by Brook for most of their fighting boards at the behest and urging of myself and a few other makers in the space early in Brook's entry to the market. The goal was to make the IPFB a low cost, easy drop-in in replacement for the PS360+ or any Brook Board if a person so chose.
 
 ## Design Files
 
-All design files are make using Autodesk EagleCAD and will only be published in that format. Gerbers and Centroids will not be provided. A basic BOM will be provided. This is to allow hobbyists with some design experience to have thier favortie board house make PCBs for them, without influencing whom they use. There are many to chose from. All files are provided as-is without any guarantee of support or help. 
+All design files are made using Autodesk EagleCAD and will only be published in that format. Gerbers and Centroids will not be provided. A basic BOM will also be provided. This is to allow hobbyists with some design experience to use their choice of board house to produce their PCBs. There are many to chose from, and it is not our intent to influence your choice. All files are provided as-is without any guarantee of support or help. 
 
 ## Sale Channels
 
@@ -95,16 +94,20 @@ To manually adust the PicoFightingBoard firmware to work perfectly with the IPFB
 
 ## Support
 
-If you have any issues with the Integrated Pico Fight Board hardware that was bought and sold via JasensCustoms.com, please reach out on the [Jasen's Customs Discord](https://discord.gg/M9E8PFHSCm).
+All files are provided as is and without warranty.
 
-If you would like to discuss features, issues or anything else related to GP2040-CE in general please [create an issue](https://github.com/OpenStickCommunity/GP2040-CE/issues/new) or join the [OpenStick GP2040-CE Discord](https://discord.gg/k2pxhke7q8) support channel.
+For issues with Integrated Pico Fight Board hardware that was bought and sold via JasensCustoms.com, please reach out via [Jasen's Customs Discord](https://discord.gg/M9E8PFHSCm).
 
-Files are all provided as is without warranty. Please use the issues tracker to make suggestions on hardware changes. They will be handled case by case by the JasensCustoms.com team. Not all recommendations will be implemented. 
+To discuss GP2040-CE firmware including features, issues, or anything else please join the [OpenStick GP2040-CE Discord](https://discord.gg/k2pxhke7q8) or [create a GitHub issue](https://github.com/OpenStickCommunity/GP2040-CE/issues/new).
+
+Hardware change suggestions can be submitted as GitHub issues on this repository, and will be reviewed on a case by case basis by the JasensCustoms.com team. Not all suggestions will be implemented.
 
 ## Acknolwedgements
 
 - [RegentOfOrigin](https://github.com/RegentOfOrigin) for helping manage the GitHub
 - [wrennnnnn](https://github.com/wrennnnnn). for the initial management and compiling of the FW with the IPFB Config.h file
-- [The entire Open Stick Community](https://github.com/OpenStickCommunity) for the GP2040-CE firmware, and most specifically FeralAI for the intial work.
+- [The entire Open Stick Community](https://github.com/OpenStickCommunity) for the GP2040-CE firmware
+- Particularly [FeralAI](https://github.com/FeralAI) for the initial work in designing and making the [PicoFightingBoard](https://github.com/FeralAI/PicoFightingBoard) available
 
-Copyright for portions of project GP2040-IPFB are held by the Open Stick Community, 2024 as part of project GP2040-CE under MIT License ([included here](LICENSE)).  All other copyright for project GP2040-IPFB are held by Jasen's Custom, 2024.
+Copyright for the Pico Fighting Board is held by FeralAI, 2021.
+Copyright for GP2040-CE is held by The Open Stick Community, 2024.
